@@ -1,37 +1,40 @@
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 import classes from "./MainNavigation.module.css";
-import { useLocation } from "react-router";
-import { Link } from "react-router-dom";
+//import { useLocation } from "react-router";
+import { NavLink } from "react-router-dom";
 
 function MainNavigation() {
-  const [activeLink, setActiveLink] = useState(null);
-  const loc = useLocation();
+  //const [activeLink, setActiveLink] = useState(null);
+  //const loc = useLocation();
 
-  useEffect(() => {
-    setActiveLink(loc.pathname);
-    console.log(loc.pathname);
-  }, [loc]);
+  // useEffect(() => {
+  //   setActiveLink(loc.pathname);
+  //   console.log(loc.pathname);
+  // }, [loc]);
   return (
     <header className={classes.header}>
       <nav>
         <ul className={classes.list}>
           <li>
-            <Link
+            <NavLink
               to="/"
-              onClick={() => setActiveLink("/")}
-              className={activeLink === "/" ? classes.active : ""}
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+              end
             >
               Home
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/events"
-              onClick={() => setActiveLink("/events")}
-              className={activeLink === "/events" ? classes.active : ""}
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
             >
               Events
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>

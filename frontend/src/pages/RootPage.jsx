@@ -1,14 +1,14 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { Outlet, useNavigation } from "react-router";
 import MainNavigation from "../components/MainNavigation";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const RootPage = () => {
+  const nav = useNavigation();
   return (
     <>
       <MainNavigation />
-      <main>
-        <Outlet />
-      </main>
+      <main>{nav.state === "loading" ? <LoadingSpinner /> : <Outlet />}</main>
     </>
   );
 };
