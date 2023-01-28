@@ -24,10 +24,17 @@ import RootPage from "./pages/RootPage";
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 import EventsPage, { EventsLoader as Loader } from "./pages/EventsPage";
-import EventDetailPage from "./pages/EventDetailPage";
+import EventDetailPage, {
+  EventDetailLoader as DetailsLoader,
+  action as EventDeleteAction,
+} from "./pages/EventDetailPage";
 import NewEventPage from "./pages/NewEventPage";
 import EditEventPage from "./pages/EditEventPage";
 import EventRootPage from "./pages/EventRootPage";
+import { action as EventAction } from "./components/EventForm";
+import NewsletterPage, {
+  action as NewsletterAction,
+} from "./pages/NewsletterPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -40,17 +47,38 @@ function App() {
         {
           path: "events",
           element: <EventRootPage />,
-          //errorElement: <ErrorPage />,
+
+          // errorElement: <ErrorPage />,
           children: [
             {
               index: true,
               element: <EventsPage />,
               loader: Loader,
             },
-            { path: "new", element: <NewEventPage /> },
-            { path: ":eventId", element: <EventDetailPage /> },
-            { path: ":eventId/edit", element: <EditEventPage /> },
+            {
+              path: ":eventId",
+              loader: DetailsLoader,
+              id: "eventId",
+              children: [
+                {
+                  index: true,
+                  element: <EventDetailPage />,
+                  action: EventDeleteAction,
+                },
+                {
+                  path: "edit",
+                  element: <EditEventPage />,
+                  action: EventAction,
+                },
+              ],
+            },
+            { path: "new", element: <NewEventPage />, action: EventAction },
           ],
+        },
+        {
+          path: "newsletter",
+          element: <NewsletterPage />,
+          action: NewsletterAction,
         },
       ],
     },

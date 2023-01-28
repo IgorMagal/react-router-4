@@ -1,7 +1,13 @@
 import React from "react";
+import EventForm from "../components/EventForm";
 
 const NewEventPage = () => {
-  return <h1>NewEventPage</h1>;
+  return (
+    <>
+      <h2>New Event</h2>
+      <EventForm method="post" />
+    </>
+  );
 };
 
 export default NewEventPage;

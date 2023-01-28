@@ -1,11 +1,18 @@
 import React from "react";
 import PageContent from "../components/PageContent";
+import { useRouteError } from "react-router";
+import MainNavigation from "../components/MainNavigation";
 
 const ErrorPage = () => {
+  const error = useRouteError();
+  //console.log("error: " + JSON.stringify(error));
   return (
-    <PageContent title="An error occured!">
-      <p>Something went wrong.</p>
-    </PageContent>
+    <>
+      <MainNavigation />
+      <PageContent title={`Error: ${error.status}`}>
+        <h3>{error.statusText}</h3>
+      </PageContent>
+    </>
   );
 };
 

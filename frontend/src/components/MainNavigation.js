@@ -2,6 +2,7 @@
 import classes from "./MainNavigation.module.css";
 //import { useLocation } from "react-router";
 import { NavLink } from "react-router-dom";
+import NewsletterSignup from "./NewsletterSignup";
 
 function MainNavigation() {
   //const [activeLink, setActiveLink] = useState(null);
@@ -26,6 +27,7 @@ function MainNavigation() {
               Home
             </NavLink>
           </li>
+          <li>|</li>
           <li>
             <NavLink
               to="/events"
@@ -36,6 +38,18 @@ function MainNavigation() {
               Events
             </NavLink>
           </li>
+          <li>|</li>
+          <li>
+            <NavLink
+              to="/newsletter"
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+            >
+              Newsletter
+            </NavLink>
+          </li>
+          <NewsletterSignup />
         </ul>
       </nav>
     </header>
