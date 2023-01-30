@@ -8,7 +8,8 @@ const RootPage = () => {
   return (
     <>
       <MainNavigation />
-      <main>{nav.state === "loading" ? <LoadingSpinner /> : <Outlet />}</main>
+      {/* <main>{nav.state === "loading" ? <LoadingSpinner /> : <Outlet />}</main> */}
+      <Outlet />
     </>
   );
 };

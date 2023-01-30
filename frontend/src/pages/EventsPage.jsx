@@ -1,21 +1,31 @@
-import { useLoaderData } from "react-router";
+import { defer, useLoaderData, Await } from "react-router-dom";
 import EventsList from "../components/EventsList";
+import { Suspense } from "react";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 function EventsPage() {
-  const data = useLoaderData();
+  const { events } = useLoaderData();
 
-  const events = data.events;
-
-  if (data.error) {
-    return <p>{data.message}</p>;
-  }
-
-  return <EventsList events={events} />;
+  return (
+    <>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Await resolve={events}>
+          {(loadedEvents) => <EventsList events={loadedEvents} />}
+        </Await>
+      </Suspense>
+    </>
+  );
 }
 
 export default EventsPage;
 
-export const EventsLoader = async () => {
+export const EventsLoader = () => {
+  return defer({
+    events: loader(),
+  });
+};
+
+export const loader = async () => {
   const response = await fetch("http://localhost:8080/events");
 
   if (!response.ok) {
@@ -31,8 +41,8 @@ export const EventsLoader = async () => {
     //   { status: response.status }
     // );
   } else {
-    // const resData = await response.json();
-    // return resData.events;
-    return response;
+    const resData = await response.json();
+    return resData.events;
+    // return response;
   }
 };

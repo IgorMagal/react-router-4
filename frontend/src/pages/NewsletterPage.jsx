@@ -12,8 +12,7 @@ function NewsletterPage() {
 export default NewsletterPage;
 
 export async function action({ request }) {
-  const data = await request.formData();
-  const email = data.get("email");
+  const { email } = await request.formData();
 
   // send to backend newsletter server ...
   console.log(email);
