@@ -88,14 +88,16 @@ function EventForm({ method, event }) {
 export default EventForm;
 
 export const action = async ({ request, params }) => {
-  const method = request.method;
-  const formData = Object.fromEntries(await request.formData());
-  console.log("Method: " + request.method);
+  const { method, formData } = request;
+  const { eventId } = params;
+
+  const data = Object.fromEntries(await formData());
+  console.log("Method: " + method);
 
   let url = "http://localhost:8080/events";
 
   if (method === "PATCH") {
-    url = url + "/" + params.eventId;
+    url = url + "/" + eventId;
   }
 
   const response = await fetch(url, {
@@ -103,7 +105,7 @@ export const action = async ({ request, params }) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(formData),
+    body: JSON.stringify(data),
   });
   //console.log(response.status);
   if (response.status === 422) {

@@ -47,8 +47,6 @@ function App() {
         {
           path: "events",
           element: <EventRootPage />,
-
-          // errorElement: <ErrorPage />,
           children: [
             {
               index: true,
